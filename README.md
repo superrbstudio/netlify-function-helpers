@@ -30,3 +30,22 @@ exports.handler = withCors((data) => {
   }
 })
 ```
+
+## Google Recaptcha
+
+You can use Google Recaptcha. You will need keys from https://www.google.com/recaptcha/about/
+
+#### Usage
+
+Using the example above use the following snippet to validate with recaptcha.
+
+You will need to send the recaptcha token with the form information and extract it first, how you do this depends on your front end set up.
+
+```
+// validate recaptcha
+try {
+  await GoogleRecaptcha.verify(recaptchaToken, process.env.RECAPTCHA_SECRET_KEY, process.env.RECAPTCHA_MINSCORE)
+} catch (error) {
+  throw new ValidationError(error.toString(), 400)
+}
+```
