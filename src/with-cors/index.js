@@ -61,10 +61,14 @@ module.exports = (callback, providedOptions = {}) => {
       return respond(response)
     } catch (err) {
       if (err instanceof ValidationError) {
-        return respond(err.toString(), 400)
+        return respond(err.toString(), err.statusCode || 400)
       }
 
-      return respond(err.toString(), 500)
+      if (err instanceof Error) {
+        return respond(err.toString(), 500)
+      }
+
+      return respond("Server Error", 500)
     }
   }
 }
